@@ -8,8 +8,8 @@ A tier list maker written in React.
 
 ## How to use?
 
-1. Enter a bunch of image URLs using plus button bottom right corner.
-2. Drag and drop image tiles from right side column to appropriate tier row.
+1. Enter a bunch of image URLs using add button bottom left corner.
+2. Drag and drop image tiles from sidebar to appropriate tier row.
 
 ## Demo
 
