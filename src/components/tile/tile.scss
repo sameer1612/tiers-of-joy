@@ -1,0 +1,25 @@
+.tile {
+  min-width: 5rem;
+  width: 5rem;
+  height: 6.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+
+  img {
+    width: 100%;
+    border-radius: 4px;
+  }
+
+  small {
+    position: absolute;
+    text-align: center;
+    font-size: smaller;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    bottom: 0;
+  }
+}

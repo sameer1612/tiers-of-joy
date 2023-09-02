@@ -1,0 +1,33 @@
+.tiles-wrapper {
+  height: 81vh;
+  overflow: auto;
+
+  .tiles {
+    column-gap: 8px;
+    row-gap: 2rem;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+
+.actions {
+  bottom: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+
+  .btn-clear {
+    background-color: #410c0c;
+    border-color: #410c0c;
+  }
+
+  .btn-reset {
+    background-color: #46250d;
+    border-color: #46250d;
+    color: white;
+
+    &:hover {
+      color: black;
+    }
+  }
+}

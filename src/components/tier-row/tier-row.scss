@@ -1,0 +1,11 @@
+.tier-row {
+  .label {
+    font-weight: 500;
+  }
+
+  .tile-wrapper {
+    display: flex;
+    gap: 8px;
+    overflow: auto;
+  }
+}
