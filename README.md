@@ -4,7 +4,7 @@ A tier list maker written in React.
 
 ## Figma Design:
 
-![Figma Design](src/assets/figma.png)
+![Figma Design](public/figma.png)
 
 ## How to use?
 
