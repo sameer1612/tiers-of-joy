@@ -72,7 +72,7 @@ export default function EditItems({ tiles, setTiles }: EditItemsProps) {
                 "Enter image title and urls in following format: \n\nurl1 title1 \nurl2 title2 \nor \ntitle (in case of text only tile)"
               }
               value={inputUrls}
-              onChange={(e) => setInputUrls(e.target.value.trim())}
+              onChange={(e) => setInputUrls(e.target.value)}
             ></textarea>
             <button
               className="btn btn-info btn-sm btn-import mt-2 px-4"
