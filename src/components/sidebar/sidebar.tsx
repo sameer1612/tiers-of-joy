@@ -1,38 +1,56 @@
-import "./sidebar.scss";
-import Tile from "../tile/tile";
+import React, { useState } from "react";
+import { frameworks } from "../../data/frameworks";
 import EditItems from "../edit-items/edit-items";
 import EditTiers from "../edit-tiers/edit-tiers";
+import Tile, { TileProps } from "../tile/tile";
+import "./sidebar.scss";
 
-export default function Sidebar() {
-  const tiles = [
-    <Tile
-      title="Angular"
-      key="Angular"
-      url="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cf/Angular_full_color_logo.svg/2048px-Angular_full_color_logo.svg.png"
-    />,
-    <Tile
-      key="React"
-      title="React"
-      url="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/2300px-React-icon.svg.png"
-    />,
-    <Tile
-      title="Vue"
-      key="Vue"
-      url="https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Vue.js_Logo_2.svg/1184px-Vue.js_Logo_2.svg.png"
-    />,
-  ];
+type SidebarProps = React.HTMLProps<HTMLDivElement> & {
+  tiers: string[];
+  setTiers: (tiers: string[]) => void;
+};
+
+export default function Sidebar({
+  className,
+  tiers,
+  setTiers,
+  ...rest
+}: SidebarProps) {
+  const [tiles, setTiles] = useState<TileProps[]>(frameworks);
+
+  const handleClear = () => {
+    setTiles([]);
+    setTiers([]);
+  };
+
+  function handleOnDrag(e: React.DragEvent<HTMLDivElement>, tile: TileProps) {
+    e.dataTransfer.setData("tile", JSON.stringify(tile));
+    e.dataTransfer.effectAllowed = "move";
+    e.dataTransfer.dropEffect = "move";
+    setTimeout(() => {
+      setTiles(tiles.filter((t) => t.url !== tile.url));
+    }, 1000);
+  }
 
   return (
-    <div className="sidebar">
+    <div {...rest} className={className + " sidebar"}>
       <div className="tiles-wrapper">
-        <div className="tiles">{tiles}</div>
+        <div className="tiles">
+          {tiles.map((t) => (
+            <Tile {...t} key={t.url} onDragStart={(e) => handleOnDrag(e, t)} />
+          ))}{" "}
+        </div>
       </div>
-      <div className="actions mt-3">
-        <EditItems />
-        <EditTiers />
-        <button className="btn btn-danger btn-clear">Clear</button>
-        <button className="btn btn-warning btn-reset">Reset</button>
+      <div className="edit-row mt-3">
+        <EditItems tiles={tiles} setTiles={setTiles} />
+        <EditTiers tiers={tiers} setTiers={setTiers} />
       </div>
+      <button
+        className="btn btn-sm btn-danger btn-clear w-100 mt-2"
+        onClick={handleClear}
+      >
+        Clear
+      </button>
     </div>
   );
 }

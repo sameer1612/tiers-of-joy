@@ -1,13 +1,13 @@
 import "./tile.scss";
 
-export type TileProps = {
+export type TileProps = React.HTMLAttributes<HTMLDivElement> & {
   title: string;
   url: string;
 };
 
-export default function Tile({ title, url }: TileProps) {
+export default function Tile({ title, url, className, ...rest }: TileProps) {
   return (
-    <div className="tile">
+    <div {...rest} className={className + " tile"}>
       <img
         src={url}
         alt={title}

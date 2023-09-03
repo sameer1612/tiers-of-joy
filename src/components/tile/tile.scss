@@ -6,20 +6,19 @@
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  position: relative;
 
   img {
-    width: 100%;
+    width: 5rem;
+    max-height: 5rem;
+    object-fit: scale-down;
     border-radius: 4px;
   }
 
   small {
-    position: absolute;
     text-align: center;
     font-size: smaller;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    bottom: 0;
   }
 }

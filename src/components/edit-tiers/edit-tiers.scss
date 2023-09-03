@@ -1,0 +1,9 @@
+.tier-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+
+  .btn-close {
+    font-size: xx-small;
+  }
+}

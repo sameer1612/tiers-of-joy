@@ -1,35 +1,100 @@
 import { useState } from "react";
-import { Button, Modal } from "react-bootstrap";
+import { Modal } from "react-bootstrap";
+import Tile, { TileProps } from "../tile/tile";
+import "./edit-items.scss";
 
-export default function EditItems() {
+type EditItemsProps = {
+  tiles: TileProps[];
+  setTiles: (tiles: TileProps[]) => void;
+};
+
+export default function EditItems({ tiles, setTiles }: EditItemsProps) {
   const [show, setShow] = useState(false);
+  const [inputUrls, setInputUrls] = useState("");
 
   const handleShow = () => setShow(true);
   const handleClose = () => setShow(false);
-  const handleSave = () => {
-    handleClose();
+  const handleDelete = (url: string) => {
+    setTiles(tiles.filter((t) => t.url !== url));
   };
+  const handleImport = () => {
+    const lines = inputUrls
+      .split("\n")
+      .map((l) => l.trim())
+      .filter((l) => !!l);
+
+    const newTiles = lines.map((line) => {
+      const tokens = line.split(" ");
+      if (tokens.length === 2) {
+        return { title: tokens[1], url: tokens[0] };
+      } else {
+        return { title: tokens[0], url: tokens[0] };
+      }
+    });
+    setTiles([...tiles, ...newTiles]);
+    setInputUrls("");
+  };
+
+  function RemovableTile({ title, url }: { title: string; url: string }) {
+    return (
+      <div className="tile-wrapper card p-2">
+        <button
+          className="btn btn-remove btn-close"
+          onClick={() => handleDelete(url)}
+        ></button>
+        <Tile title={title} key={url} url={url} />
+      </div>
+    );
+  }
 
   return (
     <>
-      <Button variant="dark" onClick={handleShow}>
+      <button className="btn btn-dark btn-sm" onClick={handleShow}>
         Edit Items
-      </Button>
+      </button>
 
-      <Modal show={show} onHide={handleClose} centered>
-        <Modal.Header closeButton className="border-0">
-          <Modal.Title>Edit Items</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <p>Modal content goes here.</p>
-        </Modal.Body>
-        <div className="p-3 d-flex justify-content-between">
-          <Button variant="secondary" onClick={handleClose}>
-            Cancel
-          </Button>
-          <Button variant="primary" onClick={handleSave}>
-            Save
-          </Button>
+      <Modal
+        size="lg"
+        show={show}
+        onHide={handleClose}
+        centered
+        className="edit-items"
+      >
+        <div className="p-3">
+          <h5 className="mb-4">Edit Items</h5>
+          <div className="wrapper">
+            <textarea
+              name="urls"
+              id="urls"
+              rows={6}
+              className="form-control"
+              placeholder={
+                "Enter image title and urls in following format: \n\nurl1 title1 \nurl2 title2 \nor \ntitle (in case of text only tile)"
+              }
+              value={inputUrls}
+              onChange={(e) => setInputUrls(e.target.value.trim())}
+            ></textarea>
+            <button
+              className="btn btn-info btn-sm btn-import mt-2 px-4"
+              onClick={handleImport}
+            >
+              Import
+            </button>
+
+            <div className="container-fluid mt-5 tiles-container">
+              {tiles.map((t) => (
+                <RemovableTile {...t} key={t.url} />
+              ))}
+            </div>
+          </div>
+        </div>
+        <div className="p-3 d-flex justify-content-end">
+          <button
+            className="btn btn-sm btn-secondary px-4"
+            onClick={handleClose}
+          >
+            Close
+          </button>
         </div>
       </Modal>
     </>
