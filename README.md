@@ -14,7 +14,7 @@ A tier list maker written in React.
 2. Add some categories/tiers using `Edit Tiers` button.
 3. Drag and drop image tiles from sidebar to appropriate tier row.
 
-## Demo
+## Demo (Click image to play)
 
 > Some web frameworks and ranking tiers are added as default for demo. Clear them using the `Clear` button.
 
