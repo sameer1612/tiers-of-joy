@@ -18,4 +18,4 @@ A tier list maker written in React.
 
 > Some web frameworks and ranking tiers are added as default for demo. Clear them using the `Clear` button.
 
-[Video coming soon...]
+[![Tiers of Joy - Demo](https://github.com/sameer1612/tiers-of-joy/blob/main/public/home.png)](https://www.youtube.com/watch?v=RL8CT78SHWk)
