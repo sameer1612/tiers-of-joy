@@ -17,7 +17,7 @@ export default function EditTiers() {
       </Button>
 
       <Modal show={show} onHide={handleClose} centered>
-        <Modal.Header closeButton>
+        <Modal.Header closeButton className="border-0">
           <Modal.Title>Edit Tiers</Modal.Title>
         </Modal.Header>
         <Modal.Body>

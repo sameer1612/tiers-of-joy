@@ -4,7 +4,9 @@ A tier list maker written in React.
 
 ## Figma Design:
 
-![Figma Design](public/figma.png)
+![App](public/figma_app.png)
+![Edit Items](public/figma_edit_items.png)
+![Edit Tiers](public/figma_edit_tiers.png)
 
 ## How to use?
 

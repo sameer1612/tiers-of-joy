@@ -17,7 +17,7 @@ export default function EditItems() {
       </Button>
 
       <Modal show={show} onHide={handleClose} centered>
-        <Modal.Header closeButton>
+        <Modal.Header closeButton className="border-0">
           <Modal.Title>Edit Items</Modal.Title>
         </Modal.Header>
         <Modal.Body>
