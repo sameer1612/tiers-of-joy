@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { removeTile } from "../../slices/tilesSlice";
+import { useAppDispatch } from "../../store";
 import Tile, { TileProps } from "../tile/tile";
 import "./tier-row.scss";
 
@@ -8,12 +10,14 @@ type TierRowProps = {
 
 export default function TierRow({ title }: TierRowProps) {
   const [tiles, setTiles] = useState<TileProps[]>([]);
+  const dispatch = useAppDispatch();
 
   function handleOnDrop(e: React.DragEvent<HTMLDivElement>) {
     const tileJSON = e.dataTransfer.getData("tile");
     if (tileJSON) {
       const tile = JSON.parse(tileJSON);
       setTiles([...tiles, tile]);
+      dispatch(removeTile(tile));
     }
   }
 

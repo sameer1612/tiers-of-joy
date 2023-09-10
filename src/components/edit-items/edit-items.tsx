@@ -1,21 +1,21 @@
 import { useState } from "react";
 import { Modal } from "react-bootstrap";
-import Tile, { TileProps } from "../tile/tile";
+import { concatTiles, removeTile } from "../../slices/tilesSlice";
+import { useAppDispatch, useAppSelector } from "../../store";
+import Tile from "../tile/tile";
 import "./edit-items.scss";
 
-type EditItemsProps = {
-  tiles: TileProps[];
-  setTiles: (tiles: TileProps[]) => void;
-};
-
-export default function EditItems({ tiles, setTiles }: EditItemsProps) {
+export default function EditItems() {
   const [show, setShow] = useState(false);
   const [inputUrls, setInputUrls] = useState("");
 
+  const tiles = useAppSelector((state) => state.tiles.value);
+  const dispatch = useAppDispatch();
+
   const handleShow = () => setShow(true);
   const handleClose = () => setShow(false);
-  const handleDelete = (url: string) => {
-    setTiles(tiles.filter((t) => t.url !== url));
+  const handleDelete = (tile: { title: string; url: string }) => {
+    dispatch(removeTile(tile));
   };
   const handleImport = () => {
     const lines = inputUrls
@@ -31,7 +31,7 @@ export default function EditItems({ tiles, setTiles }: EditItemsProps) {
         return { title: tokens[0], url: tokens[0] };
       }
     });
-    setTiles([...tiles, ...newTiles]);
+    dispatch(concatTiles(newTiles));
     setInputUrls("");
   };
 
@@ -40,7 +40,7 @@ export default function EditItems({ tiles, setTiles }: EditItemsProps) {
       <div className="tile-wrapper card p-2">
         <button
           className="btn btn-remove btn-close"
-          onClick={() => handleDelete(url)}
+          onClick={() => handleDelete({ title, url })}
         ></button>
         <Tile title={title} key={url} url={url} />
       </div>

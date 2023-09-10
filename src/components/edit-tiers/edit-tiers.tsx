@@ -1,27 +1,27 @@
 import { useState } from "react";
 import { Modal } from "react-bootstrap";
+import { addTier, removeTier } from "../../slices/tierSlice";
+import { useAppDispatch, useAppSelector } from "../../store";
 import "./edit-tiers.scss";
 
-type EditTiersProps = {
-  tiers: string[];
-  setTiers: (tiers: string[]) => void;
-};
-
-export default function EditTiers({ tiers, setTiers }: EditTiersProps) {
+export default function EditTiers() {
   const [show, setShow] = useState(false);
   const [newTier, setNewTier] = useState("");
+
+  const tiers = useAppSelector((state) => state.tiers.value);
+  const dispatch = useAppDispatch();
 
   const handleShow = () => setShow(true);
   const handleClose = () => setShow(false);
   const handleAdd = () => {
     if (newTier) {
-      setTiers([...tiers, newTier]);
+      dispatch(addTier(newTier));
       setNewTier("");
     }
   };
 
   const handleRemove = (tier: string) => {
-    setTiers(tiers.filter((t) => t !== tier));
+    dispatch(removeTier(tier));
   };
 
   return (

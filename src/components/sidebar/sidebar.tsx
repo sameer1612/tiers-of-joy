@@ -1,35 +1,27 @@
-import React, { useState } from "react";
-import { frameworks } from "../../data/frameworks";
+import React from "react";
+import { setTiers } from "../../slices/tierSlice";
+import { setTiles } from "../../slices/tilesSlice";
+import { useAppDispatch, useAppSelector } from "../../store";
 import EditItems from "../edit-items/edit-items";
 import EditTiers from "../edit-tiers/edit-tiers";
 import Tile, { TileProps } from "../tile/tile";
 import "./sidebar.scss";
 
-type SidebarProps = React.HTMLProps<HTMLDivElement> & {
-  tiers: string[];
-  setTiers: (tiers: string[]) => void;
-};
+type SidebarProps = React.HTMLProps<HTMLDivElement> & {};
 
-export default function Sidebar({
-  className,
-  tiers,
-  setTiers,
-  ...rest
-}: SidebarProps) {
-  const [tiles, setTiles] = useState<TileProps[]>(frameworks);
+export default function Sidebar({ className, ...rest }: SidebarProps) {
+  const tiles = useAppSelector((state) => state.tiles.value);
+  const dispatch = useAppDispatch();
 
   const handleClear = () => {
-    setTiles([]);
-    setTiers([]);
+    dispatch(setTiles([]));
+    dispatch(setTiers([]));
   };
 
   function handleOnDrag(e: React.DragEvent<HTMLDivElement>, tile: TileProps) {
     e.dataTransfer.setData("tile", JSON.stringify(tile));
     e.dataTransfer.effectAllowed = "move";
     e.dataTransfer.dropEffect = "move";
-    setTimeout(() => {
-      setTiles(tiles.filter((t) => t.url !== tile.url));
-    }, 1000);
   }
 
   return (
@@ -42,8 +34,8 @@ export default function Sidebar({
         </div>
       </div>
       <div className="edit-row mt-3">
-        <EditItems tiles={tiles} setTiles={setTiles} />
-        <EditTiers tiers={tiers} setTiers={setTiers} />
+        <EditItems />
+        <EditTiers />
       </div>
       <button
         className="btn btn-sm btn-danger btn-clear w-100 mt-2"
