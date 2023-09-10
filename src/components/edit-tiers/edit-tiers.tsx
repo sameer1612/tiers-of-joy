@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Modal } from "react-bootstrap";
-import { addTier, removeTier } from "../../slices/tierSlice";
-import { useAppDispatch, useAppSelector } from "../../store";
+import { addTier, removeTier } from "../../redux/tierSlice";
+import { useAppDispatch, useAppSelector } from "../../redux/store";
 import "./edit-tiers.scss";
 
 export default function EditTiers() {

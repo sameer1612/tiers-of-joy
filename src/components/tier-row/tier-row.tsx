@@ -1,7 +1,7 @@
-import { useState } from "react";
-import { removeTile } from "../../slices/tilesSlice";
-import { useAppDispatch } from "../../store";
-import Tile, { TileProps } from "../tile/tile";
+import { useAppDispatch, useAppSelector } from "../../redux/store";
+import { addTile, removeTile } from "../../redux/tilesSlice";
+import { handleOnDrag, handleOnDragOver } from "../../utils/drag-handler";
+import Tile from "../tile/tile";
 import "./tier-row.scss";
 
 type TierRowProps = {
@@ -9,20 +9,20 @@ type TierRowProps = {
 };
 
 export default function TierRow({ title }: TierRowProps) {
-  const [tiles, setTiles] = useState<TileProps[]>([]);
+  const tiles = useAppSelector((state) => state.tiles.value).filter(
+    (t) => t.tier === title
+  );
   const dispatch = useAppDispatch();
 
   function handleOnDrop(e: React.DragEvent<HTMLDivElement>) {
     const tileJSON = e.dataTransfer.getData("tile");
     if (tileJSON) {
       const tile = JSON.parse(tileJSON);
-      setTiles([...tiles, tile]);
       dispatch(removeTile(tile));
+      setTimeout(() => {
+        dispatch(addTile({ ...tile, tier: title }));
+      }, 50);
     }
-  }
-
-  function handleOnDragOver(e: React.DragEvent<HTMLDivElement>) {
-    e.preventDefault();
   }
 
   return (
@@ -34,8 +34,13 @@ export default function TierRow({ title }: TierRowProps) {
       >
         <small className="mb-2 label">{title}</small>
         <div className="tile-wrapper">
-          {tiles.map((e) => (
-            <Tile key={e.title} title={e.title} url={e.url} />
+          {tiles.map((t) => (
+            <Tile
+              key={t.title}
+              title={t.title}
+              url={t.url}
+              onDragStart={(e) => handleOnDrag(e, t)}
+            />
           ))}
         </div>
       </div>

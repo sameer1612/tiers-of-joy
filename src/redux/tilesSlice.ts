@@ -3,6 +3,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 type Tile = {
   title: string;
   url: string;
+  tier: string | undefined | null;
 };
 interface TilesState {
   value: Tile[];

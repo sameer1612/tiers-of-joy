@@ -1,7 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
-import tilesReducer from "./slices/tilesSlice";
-import tierReducer from "./slices/tierSlice";
+import tilesReducer from "./tilesSlice";
+import tierReducer from "./tierSlice";
 
 export const store = configureStore({
   reducer: {

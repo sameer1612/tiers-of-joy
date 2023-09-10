@@ -1,4 +1,4 @@
-import { useAppSelector } from "../../store";
+import { useAppSelector } from "../../redux/store";
 import TierRow from "../tier-row/tier-row";
 
 type TierListProps = React.HTMLProps<HTMLDivElement> & {};

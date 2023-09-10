@@ -5,9 +5,9 @@ import Sidebar from "./components/sidebar/sidebar";
 import TierList from "./components/tier-list/tier-list";
 import { frameworks } from "./data/frameworks";
 import { sampleTiers } from "./data/sample-tiers";
-import { setTiers } from "./slices/tierSlice";
-import { concatTiles, setTiles } from "./slices/tilesSlice";
-import { useAppDispatch } from "./store";
+import { setTiers } from "./redux/tierSlice";
+import { concatTiles, setTiles } from "./redux/tilesSlice";
+import { useAppDispatch } from "./redux/store";
 
 function App() {
   const dispatch = useAppDispatch();

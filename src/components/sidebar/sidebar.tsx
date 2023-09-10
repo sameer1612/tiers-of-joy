@@ -1,16 +1,19 @@
 import React from "react";
-import { setTiers } from "../../slices/tierSlice";
-import { setTiles } from "../../slices/tilesSlice";
-import { useAppDispatch, useAppSelector } from "../../store";
+import { useAppDispatch, useAppSelector } from "../../redux/store";
+import { setTiers } from "../../redux/tierSlice";
+import { addTile, removeTile, setTiles } from "../../redux/tilesSlice";
+import { handleOnDrag, handleOnDragOver } from "../../utils/drag-handler";
 import EditItems from "../edit-items/edit-items";
 import EditTiers from "../edit-tiers/edit-tiers";
-import Tile, { TileProps } from "../tile/tile";
+import Tile from "../tile/tile";
 import "./sidebar.scss";
 
 type SidebarProps = React.HTMLProps<HTMLDivElement> & {};
 
 export default function Sidebar({ className, ...rest }: SidebarProps) {
-  const tiles = useAppSelector((state) => state.tiles.value);
+  const tiles = useAppSelector((state) => state.tiles.value).filter(
+    (t) => !t.tier
+  );
   const dispatch = useAppDispatch();
 
   const handleClear = () => {
@@ -18,14 +21,24 @@ export default function Sidebar({ className, ...rest }: SidebarProps) {
     dispatch(setTiers([]));
   };
 
-  function handleOnDrag(e: React.DragEvent<HTMLDivElement>, tile: TileProps) {
-    e.dataTransfer.setData("tile", JSON.stringify(tile));
-    e.dataTransfer.effectAllowed = "move";
-    e.dataTransfer.dropEffect = "move";
+  function handleOnDrop(e: React.DragEvent<HTMLDivElement>) {
+    const tileJSON = e.dataTransfer.getData("tile");
+    if (tileJSON) {
+      const tile = JSON.parse(tileJSON);
+      dispatch(removeTile(tile));
+      setTimeout(() => {
+        dispatch(addTile({ ...tile, tier: null }));
+      }, 50);
+    }
   }
 
   return (
-    <div {...rest} className={className + " sidebar"}>
+    <div
+      {...rest}
+      className={className + " sidebar"}
+      onDrop={handleOnDrop}
+      onDragOver={handleOnDragOver}
+    >
       <div className="tiles-wrapper">
         <div className="tiles">
           {tiles.map((t) => (

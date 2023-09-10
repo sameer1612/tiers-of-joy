@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Modal } from "react-bootstrap";
-import { concatTiles, removeTile } from "../../slices/tilesSlice";
-import { useAppDispatch, useAppSelector } from "../../store";
+import { concatTiles, removeTile } from "../../redux/tilesSlice";
+import { useAppDispatch, useAppSelector } from "../../redux/store";
 import Tile from "../tile/tile";
 import "./edit-items.scss";
 
