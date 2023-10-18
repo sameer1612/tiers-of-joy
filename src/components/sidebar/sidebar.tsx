@@ -26,9 +26,8 @@ export default function Sidebar({ className, ...rest }: SidebarProps) {
 
   const handleReset = () => {
     dispatch(setTiles([]));
-
-            dispatch(concatTiles(frameworks));
-            dispatch(setTiers(sampleTiers));
+    dispatch(concatTiles(frameworks));
+    dispatch(setTiers(sampleTiers));
   };
 
   function handleOnDrop(e: React.DragEvent<HTMLDivElement>) {
