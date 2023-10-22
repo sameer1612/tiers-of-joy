@@ -2,10 +2,8 @@
 import React from "react";
 import { useAppDispatch, useAppSelector } from "../../redux/store";
 import { setTiers } from "../../redux/tierSlice";
-import { addTile, removeTile, setTiles, concatTiles } from "../../redux/tilesSlice";
+import { addTile, removeTile, setTiles } from "../../redux/tilesSlice";
 import { handleOnDrag, handleOnDragOver } from "../../utils/drag-handler";
-import { frameworks } from "../../data/frameworks";
-import { sampleTiers } from "../../data/sample-tiers";
 import EditItems from "../edit-items/edit-items";
 import EditTiers from "../edit-tiers/edit-tiers";
 import Tile from "../tile/tile";
@@ -25,7 +23,8 @@ export default function Sidebar({ className, ...rest }: SidebarProps) {
   };
 
   const handleReset = () => {
-    
+    console.log()
+    dispatch(setTiles(tiles));
   };
 
   function handleOnDrop(e: React.DragEvent<HTMLDivElement>) {
@@ -65,7 +64,7 @@ export default function Sidebar({ className, ...rest }: SidebarProps) {
           Clear
         </button>
         <button
-          className="btn btn-sm btn-warning w-100 mt-2"
+          className="btn btn-sm btn-warning btn-dark w-100 mt-2"
           onClick={handleReset}>
           Reset
         </button>
