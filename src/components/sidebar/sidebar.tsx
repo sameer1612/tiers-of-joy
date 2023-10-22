@@ -25,9 +25,7 @@ export default function Sidebar({ className, ...rest }: SidebarProps) {
   };
 
   const handleReset = () => {
-    dispatch(setTiles([]));
-    dispatch(concatTiles(frameworks));
-    dispatch(setTiers(sampleTiers));
+    
   };
 
   function handleOnDrop(e: React.DragEvent<HTMLDivElement>) {
@@ -67,8 +65,7 @@ export default function Sidebar({ className, ...rest }: SidebarProps) {
           Clear
         </button>
         <button
-          className="btn btn-sm w-100 mt-2"
-          style={{ backgroundColor: "#6a1717" }}
+          className="btn btn-sm btn-warning w-100 mt-2"
           onClick={handleReset}>
           Reset
         </button>
