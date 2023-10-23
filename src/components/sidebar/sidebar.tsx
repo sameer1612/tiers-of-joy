@@ -1,3 +1,4 @@
+
 import React from "react";
 import { useAppDispatch, useAppSelector } from "../../redux/store";
 import { setTiers } from "../../redux/tierSlice";
@@ -19,6 +20,11 @@ export default function Sidebar({ className, ...rest }: SidebarProps) {
   const handleClear = () => {
     dispatch(setTiles([]));
     dispatch(setTiers([]));
+  };
+
+  const handleReset = () => {
+    console.log()
+    dispatch(setTiles(tiles));
   };
 
   function handleOnDrop(e: React.DragEvent<HTMLDivElement>) {
@@ -50,12 +56,19 @@ export default function Sidebar({ className, ...rest }: SidebarProps) {
         <EditItems />
         <EditTiers />
       </div>
-      <button
-        className="btn btn-sm btn-danger btn-clear w-100 mt-2"
-        onClick={handleClear}
-      >
-        Clear
-      </button>
+      <div className="edit-row mt-1">
+        <button
+          className="btn btn-sm btn-danger btn-clear w-100 mt-2"
+          onClick={handleClear}
+        >
+          Clear
+        </button>
+        <button
+          className="btn btn-sm btn-warning btn-dark w-100 mt-2"
+          onClick={handleReset}>
+          Reset
+        </button>
+      </div>
     </div>
   );
 }
