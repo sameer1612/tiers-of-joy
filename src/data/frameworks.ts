@@ -4,7 +4,7 @@ export const frameworks: { url: string; title: string }[] = [
     title: "React",
   },
   {
-    url: "https://seeklogo.com/images/A/angular-logo-B76B1CDE98-seeklogo.com.png",
+    url: "https://seeklogo.com/images/A/angular-logox-B76B1CDE98-seeklogo.com.png",
     title: "Angular",
   },
   {
@@ -41,6 +41,6 @@ export const frameworks: { url: string; title: string }[] = [
   },
   {
     url: "https://seeklogo.com/images/S/svelte-logo-E3497608CB-seeklogo.com.png",
-    title: "Svelete",
+    title: "Svelte",
   },
 ];

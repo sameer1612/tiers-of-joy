@@ -16,8 +16,10 @@ export default function TierRow({ title }: TierRowProps) {
 
   function handleOnDrop(e: React.DragEvent<HTMLDivElement>) {
     const tileJSON = e.dataTransfer.getData("tile");
+    
     if (tileJSON) {
       const tile = JSON.parse(tileJSON);
+      // console.log(tile)
       dispatch(removeTile(tile));
       setTimeout(() => {
         dispatch(addTile({ ...tile, tier: title }));

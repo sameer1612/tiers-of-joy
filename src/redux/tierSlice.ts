@@ -12,7 +12,7 @@ const tierSlice = createSlice({
   name: "tiers",
   initialState,
   reducers: {
-    setTiers: (state, action: PayloadAction<TierState["value"]>) => {
+    setTiers: ( state, action: PayloadAction<TierState["value"]>) => {
       state.value = action.payload;
     },
     addTier: (state, action: PayloadAction<string>) => {

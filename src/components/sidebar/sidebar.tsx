@@ -5,6 +5,8 @@ import { addTile, removeTile, setTiles } from "../../redux/tilesSlice";
 import { handleOnDrag, handleOnDragOver } from "../../utils/drag-handler";
 import EditItems from "../edit-items/edit-items";
 import EditTiers from "../edit-tiers/edit-tiers";
+import ImportJSON from "../import-json/import-json";
+import ExportJSON from "../export-json/export-json";;
 import Tile from "../tile/tile";
 import "./sidebar.scss";
 
@@ -47,6 +49,8 @@ export default function Sidebar({ className, ...rest }: SidebarProps) {
         </div>
       </div>
       <div className="edit-row mt-3">
+        <ImportJSON />
+        <ExportJSON />
         <EditItems />
         <EditTiers />
       </div>
