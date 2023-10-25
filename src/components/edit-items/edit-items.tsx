@@ -23,7 +23,6 @@ export default function EditItems() {
       .map((l) => l.trim())
       .filter((l) => !!l);
 
-      console.log("Filter", lines)
     const newTiles = lines.map((line) => {
       const tokens = line.split(" ");
       if (tokens.length === 2) {

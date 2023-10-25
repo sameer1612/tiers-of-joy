@@ -41,6 +41,6 @@ export const frameworks: { url: string; title: string }[] = [
   },
   {
     url: "https://seeklogo.com/images/S/svelte-logo-E3497608CB-seeklogo.com.png",
-    title: "Svelete",
+    title: "Svelte",
   },
 ];

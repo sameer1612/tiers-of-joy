@@ -1,15 +1,13 @@
-import { useState } from "react";
+import { useState } from 'react';
 import { Modal } from "react-bootstrap";
 
-import { addTile, removeTile } from "../../redux/tilesSlice";
-import { setTiers } from "../../redux/tierSlice";
+import { addTile, removeTile } from "../../redux/tilesSlice"; 
 import { useAppDispatch, useAppSelector } from "../../redux/store";
 import Tile from "../tile/tile";
-// import "./edit-items.scss";
 
 export default function ImportJSON() {
     const [show, setShow] = useState(false);
-    const [inputUrls, setInputUrls] = useState("");
+    const [file, setFile] = useState<File | null>(null);
 
     const tiles = useAppSelector((state) => state.tiles.value);
     const dispatch = useAppDispatch();
@@ -19,31 +17,57 @@ export default function ImportJSON() {
     const handleDelete = (tile: { title: string; url: string }) => {
         dispatch(removeTile(tile));
       };
-    
-    const handleImport = () => {
-        const lines = inputUrls
-          .replace(/[\n{}]/g, "")
-          .split("{}")
-          
-          .map((l) => l.trim())
+
+    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+      if (e.target.files) {
+        setFile(e.target.files[0]);
+      }
+    };
+
+    // store text data from importing file.json
+    let input = '';
+
+    function handleUpload() {
+      if (file) {
+        let reader = new FileReader();
+        reader.readAsText(file)
+        reader.onload = function() {
+          if (reader.result  !== null) {
+             input = reader.result as string;
+            handleImport(input)
+          }
+        }
+      }
+      else {
+        alert("Error: Choose a file.json")
+      }
+    };
+
+    const handleImport = (input: string) => {
+        const lines = input
+          .replace(/[\n""'' ]/g, "")
+          .replace(/tier:/g, "")
+          .replace(/title:/g, "")
+          .replace(/url:/g, "")
+          .split("},")
+          .map((l) => l
+            .replace(/[{}]/g, "")
+            .trim())
         //   .filter((l) => !!l);
         
-        console.log("Split", lines)
-        const newTiles = lines.map((line) => {
+        lines.map((line) => {
           const tokens = line.split(",");
-          console.log("Length", tokens.length)
-          if (tokens.length !== 1) {
-            return { url: tokens[2], title: tokens[1], tier: tokens[0] };
-          } 
+          if (tokens.length === 3) {
+            dispatch(removeTile({  title: tokens[1], tier: tokens[2], url: tokens[0] }))
+            dispatch(addTile({  title: tokens[1], tier: tokens[2], url: tokens[0] }));
+            
+          }
         //   if (tokens.length === 2) {
         //     return { url: tokens[2], title: tokens[1], tier: tokens[1] };
         //   } else {
         //     return { url: tokens[0], title: tokens[0], tier: tokens[1] };
-        //   }
+        //   } 
         });
-        console.log("newTiles", newTiles)
-        dispatch(addTile({newTiles}));
-        setInputUrls("");
       };
 
       function RemovableTile({ title, url }: { title: string; url: string }) {
@@ -73,21 +97,11 @@ export default function ImportJSON() {
                 <div className="p-3">
                     <h5 className="mb-4">Import</h5>
                     <div className="wrapper">
-                        <textarea
-                            name="urls"
-                            id="urls"
-                            rows={10}
-                            className="form-control"
-                            placeholder={
-                                "Enter url, title and tier in JSON format: \n\n{\nurl1: 'url1',\ntitle1: 'title1'\,\ntier1: 'tier1'\n},\n{\nurl2: 'url2',\ntitle2: 'title2',\ntier2: 'tier2'\n}"
-                            }
-                            value={inputUrls}
-                            onChange={(e) => setInputUrls(e.target.value)}
-                        ></textarea>
+                        <input className="btn btn-dark btn-sm" type='file' id='file' placeholder="Import" onChange={handleFileChange} />
 
                         <button
                             className="btn btn-info btn-sm btn-import mt-2 px-4"
-                            onClick={handleImport}
+                            onClick={handleUpload}
                         >
                             Import
                         </button>
